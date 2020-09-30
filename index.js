@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const exphbs = require("express-handlebars");
 const todoRoutes = require("./routes/todos");
+require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,14 +25,11 @@ app.use(todoRoutes);
 
 async function start() {
   try {
-    await mongoose.connect(
-      "mongodb+srv://Oleksandr:jAhLmyxIUFlLtCzO@cluster0.t0zo2.mongodb.net/todos",
-      {
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true,
-      }
-    );
+    await mongoose.connect(process.env.MONGODB_URL, {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useUnifiedTopology: true,
+    });
     app.listen(PORT, () => {
       console.log("Server has been started...");
     });
